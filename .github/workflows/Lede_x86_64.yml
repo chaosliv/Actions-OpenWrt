@@ -210,14 +210,16 @@ jobs:
         echo "::warning file=wetransfer.com::$(cat wetransfer.log | grep https)"
     
     - name: 提取发布用的「奶牛快传」跟「WeTransfer」的链接
-      if: steps.organizer.outputs.status == 'success' && !cancelled()
+      if: steps.organizer.outputs.status == 'success' && env.UPLOAD_RELEASE == 'true'
       run: |
+        id: cowtransfer
         curl -fsSL git.io/file-transfer | sh
         ./transfer cow --block 2621440 -s -p 64 --no-progress ${FIRMWARE}/* 2>&1 | tee cowtransfer.log
         echo "::set-output name=url::$(cat cowtransfer.log | grep https | cut -f3 -d" ")" 
+        id: wetransfer
         curl -fsSL git.io/file-transfer | sh
         ./transfer wet -s -p 16 --no-progress ${FIRMWARE}/* 2>&1 | tee wetransfer.log
-        echo "::set-output name=url::$(cat wetransfer.log | grep https | cut -f3 -d" ")"  
+        echo "::set-output name=url::$(cat wetransfer.log | grep https | cut -f3 -d" ")" 
     
     - name: 自动发布固件
       uses: softprops/action-gh-release@v1
