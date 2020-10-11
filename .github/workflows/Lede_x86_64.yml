@@ -7,7 +7,7 @@
 #
 
 
-name: 编译Lede_x86_64固件
+name: 编译O固件
 
 on:
   workflow_dispatch:
@@ -23,7 +23,7 @@ on:
     branches:
       - master
     paths:
-      - '123'
+      - '开启编译'
 
 
 #定时触发开始编译(开启定时编译请先确定SSH处在关闭状态,要不然SSH没人管,会卡SSH编译失败)
@@ -36,8 +36,7 @@ on:
 #    types: started
 
 
-env:
-  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
+env: 
   REPO_TOKEN: ${{ secrets.REPO_TOKEN }}
   SCKEY: ${{ secrets.SCKEY }}
   GITHUB_RELEASE: https://github.com/281677160/Actions-OpenWrt/releases
