@@ -214,10 +214,10 @@ jobs:
       if: steps.organizer.outputs.status == 'success' && !cancelled()
       run: |
         curl -fsSL git.io/file-transfer | sh
-        ./transfer cow --block 2621440 -s -p 64 --no-progress ${FIRMWARE} 2>&1 | tee cowtransfer.log
+        ./transfer cow --block 2621440 -s -p 64 --no-progress ${FIRMWARE}/* 2>&1 | tee cowtransfer.log
         echo "COWTRANSFER_URL=$(cat wetransfer.log | grep https | cut -f3 -d" ")" >> $GITHUB_ENV 
         curl -fsSL git.io/file-transfer | sh
-        ./transfer wet -s -p 16 --no-progress ${FIRMWARE} 2>&1 | tee wetransfer.log
+        ./transfer wet -s -p 16 --no-progress ${FIRMWARE}/* 2>&1 | tee wetransfer.log
         echo "WETRANSFER_URL=$(cat wetransfer.log | grep https | cut -f3 -d" ")" >> $GITHUB_ENV  
     
     - name: 自动发布固件
