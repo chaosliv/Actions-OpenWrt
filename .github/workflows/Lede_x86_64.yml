@@ -235,9 +235,9 @@ jobs:
             
             🎉 [ ${{matrix.target}} ]固件下载 ✨
             
-            💐 奶牛快传(国内高速🚀下载)： ${{ env.COWTRANSFER_URL }}
+            💐 奶牛快传(国内高速🚀下载)： ${{ steps.cowtransfer.outputs.url }}
             
-            ⛄ WeTransfer(国外高速🚀下载)： ${{ env.WETRANSFER_URL }}
+            ⛄ WeTransfer(国外高速🚀下载)： ${{ steps.wetransfer.outputs.url }}
             
             🌴 链接有效期为7天，无需注册直接下载 🐤
         files: ${{ env.FIRMWARE }}/*
