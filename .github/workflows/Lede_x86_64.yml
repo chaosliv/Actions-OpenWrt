@@ -210,6 +210,18 @@ jobs:
         ./transfer wet -s -p 16 --no-progress ${FIRMWARE} 2>&1 | tee wetransfer.log
         echo "::warning file=wetransfer.com::$(cat wetransfer.log | grep https)"
     
+    - name: Deploy files to server
+      uses: easingthemes/ssh-deploy@master
+      continue-on-error: true
+      if: env.SSH_PRIVATE_KEY
+      with:
+        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        ARGS: "-avzr --exclude=${{matrix.target}}.config"
+        SOURCE: firmware/
+        REMOTE_HOST: op.supes.top
+        REMOTE_USER: root
+        TARGET: "/www/wwwroot/op.supes.top/firmware/${{matrix.target}}/"    
+    
     - name: 提取发布用的「奶牛快传」跟「WeTransfer」的链接
       if: steps.organizer.outputs.status == 'success' && env.UPLOAD_RELEASE == 'true'
       run: |
@@ -234,6 +246,8 @@ jobs:
             ☆  感谢源码作者无私分享！
             
             🎉 [ ${{matrix.target}} ]固件下载 ✨
+            
+            💐 腾讯云: https://op.supes.top/firmware/${{matrix.target}}/
             
             💐 奶牛快传(国内高速🚀下载)： ${{ env.COWTRANSFER_URL }}
             
