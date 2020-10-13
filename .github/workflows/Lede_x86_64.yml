@@ -211,18 +211,6 @@ jobs:
         ./transfer wet -s -p 16 --no-progress ${FIRMWARE} 2>&1 | tee wetransfer.log
         echo "::warning file=wetransfer.com::$(cat wetransfer.log | grep https)"
     
-    - name: Deploy files to server
-      uses: easingthemes/ssh-deploy@master
-      continue-on-error: true
-      if: env.SSH_PRIVATE_KEY
-      with:
-        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-        ARGS: "-avzr --exclude=${{matrix.target}}.config"
-        SOURCE: firmware/
-        REMOTE_HOST: op.supes.top
-        REMOTE_USER: root
-        TARGET: "/www/wwwroot/op.supes.top/firmware/${{matrix.target}}/"    
-    
     - name: 提取发布用的「奶牛快传」跟「WeTransfer」的链接
       if: steps.organizer.outputs.status == 'success' && env.UPLOAD_RELEASE == 'true'
       run: |
@@ -280,13 +268,13 @@ jobs:
               
               祝小主人见人爱，花见花开，车见车载，天天好心情🎈！！！
 
-    - name: Remove old Artifacts
+    - name: 删除上传在github空间的老固件
       uses: c-hive/gha-remove-artifacts@v1.2.0
       with:
         age: '20 day'
         skip-recent: 3
 
-    - name: Remove old Releases
+    - name: 删除自动发布的的老固件
       uses: dev-drprasad/delete-older-releases@v0.1.0
       if: steps.organizer.outputs.status == 'success' && env.UPLOAD_RELEASE == 'true'
       with:
