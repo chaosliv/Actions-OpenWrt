@@ -40,7 +40,7 @@ env:
   REPO_TOKEN: ${{ secrets.REPO_TOKEN }}
   SCKEY: ${{ secrets.SCKEY }}
   SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-  GITHUB_RELEASE: https://github.com/281677160/Actions-OpenWrt/releases
+  GITHUB_RELEASE: https://github.com/chaosliv/Actions-OpenWrt/releases
   TZ: Asia/Shanghai
 
 jobs: 
