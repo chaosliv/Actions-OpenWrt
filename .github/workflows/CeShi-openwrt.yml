@@ -58,9 +58,8 @@ jobs:
     - name: 准备结束
       uses: actions/checkout@v2
   
-      - name: Deploy files to server
+    - name: Deploy files to server
       uses: easingthemes/ssh-deploy@master
-      continue-on-error: true
       if: env.SSH_PRIVATE_KEY
       with:
         SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
