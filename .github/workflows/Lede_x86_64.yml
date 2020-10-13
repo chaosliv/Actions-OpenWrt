@@ -283,7 +283,7 @@ jobs:
     - name: Remove old Artifacts
       uses: c-hive/gha-remove-artifacts@v1.2.0
       with:
-        age: '1 day'
+        age: '20 day'
         skip-recent: 3
 
     - name: Remove old Releases
